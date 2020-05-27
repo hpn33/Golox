@@ -9,7 +9,7 @@ var outputs := []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	ErrorHandler.connect("async", self, 'refresh')
+	ErrorHandler.connect("exporting", self, 'refresh')
 	pass # Replace with function body.
 
 

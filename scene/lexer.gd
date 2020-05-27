@@ -13,6 +13,11 @@ func do():
 
 func scan_tokens():
 	while not Reader.is_at_end():
+		
+		if ErrorHandler.had_error:
+			ErrorHandler.show_error()
+			break
+		
 		Reader.fresh()
 		scan_token()
 	
@@ -35,11 +40,21 @@ func scan_token():
 #	print(c)
 	
 	
-	for action in actions:
-		if action.check(c):
-			action.lex(c)
-			break
 	
+	
+	
+#	for action in actions:
+#		if action.check(c):
+#			action.lex(c)
+#			break
+	
+	Reader.add_token({type = "string", body ='value'})
+	
+	if false:
+		pass
+	
+	else:
+		ErrorHandler.error(str(Reader.line) + ": Unexpected character.")
 
 
 
