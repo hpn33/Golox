@@ -16,7 +16,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Golox"
+run/main_scene="res://scene/Main.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+ErrorHandler="*res://autoload/ErrorHandler.gd"
+Reader="*res://autoload/Reader.gd"
+u="*res://autoload/Util.gd"
 
 [rendering]
 
