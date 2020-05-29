@@ -21,14 +21,16 @@ func scan_tokens():
 		Reader.fresh()
 		scan_token()
 	
-	Reader.add_token({
-		type = 'EOF',
-		body = ''})
+	
+	Reader.add_token(Token.new(TokenType.EOF, "", null, Reader.line))
+	
+	
 
 
 
 var actions = [
-	StringAction.new()
+	SingleLetterAction.new(),
+#	StringAction.new()
 ]
 
 
@@ -37,51 +39,30 @@ func scan_token():
 	
 	var c = Reader.advance()
 	
+	var error = true
 #	print(c)
 	
 	
 	
 	
 	
-#	for action in actions:
-#		if action.check(c):
-#			action.lex(c)
-#			break
+	for action in actions:
+		if action.check(c):
+			action.lex(c)
+			error = false
+			break
 	
-	if false:
-		pass
 	
-	else:
+	
+	if error:
 		ErrorHandler.error(str(Reader.line) + ": \""+ c + "\" : Unexpected character.")
 
 
 
-class StringAction:
-	
-	func check(c):
-		return c in ["'", "\""]
-	
-	func lex(symbol):
-		
-		while not Reader.is_at_end() and Reader.peek() != symbol:
-			
-			Reader.advance()
-		
-		# Unterminated string.
-		if Reader.is_at_end():
-			# Lox.error(self.line, 'Unterminated string.')
-			ErrorHandler.error('Unterminated string.')
-		
-		# The closing ".
-#		Reader.advance()
-		
-		# Trim the surrounding quotes
-#		value = Reader.source[self.start + 1: self.current - 1]
-		var value = Reader.substr(Reader.start + 1, Reader.current - 1)
-		# print(value)
-		print(value)
-		Reader.add_token({type = "string", body =value})
-		
+
+
+
+
 
 
 
@@ -142,7 +123,7 @@ func detect_string(token_array):
 	var index = 0
 	var can_read = true
 	var is_string = false
-	var tok_string : u.Token
+	var tok_string : Token
 	
 	while can_read:
 		
@@ -180,3 +161,65 @@ func detect_string(token_array):
 
 
 
+class StringAction:
+	
+	func check(c):
+		return c in ["'", "\""]
+	
+	func lex(symbol):
+		
+		while not Reader.is_at_end() and Reader.peek() != symbol:
+			
+			Reader.advance()
+		
+		# Unterminated string.
+		if Reader.is_at_end():
+			# Lox.error(self.line, 'Unterminated string.')
+			ErrorHandler.error('Unterminated string.')
+		
+		# The closing ".
+#		Reader.advance()
+		
+		# Trim the surrounding quotes
+#		value = Reader.source[self.start + 1: self.current - 1]
+		var value = Reader.substr(Reader.start + 1, Reader.current - 1)
+		# print(value)
+		print(value)
+#		Reader.add_token({type = "string", body =value})
+		
+
+
+class SingleLetterAction:
+	
+	
+#	case '(': addToken(LEFT_PAREN); break;     
+#	  case ')': addToken(RIGHT_PAREN); break;    
+#	  case '{': addToken(LEFT_BRACE); break;     
+#	  case '}': addToken(RIGHT_BRACE); break;    
+#	  case ',': addToken(COMMA); break;          
+#	  case '.': addToken(DOT); break;            
+#	  case '-': addToken(MINUS); break;          
+#	  case '+': addToken(PLUS); break;           
+#	  case ';': addToken(SEMICOLON); break;      
+#	  case '*': addToken(STAR); break; 
+	
+	var dic := {
+		'(': TokenType.LEFT_PAREN,
+		')': TokenType.RIGHT_PAREN,
+		'{': TokenType.LEFT_BRACE,
+		'}': TokenType.RIGHT_BRACE,
+		',': TokenType.COMMA,
+		'.': TokenType.DOT,
+		'-': TokenType.MINUS,
+		'+': TokenType.PLUS,
+		';': TokenType.SEMICOLON,
+		'*': TokenType.STAR
+	}
+	
+	
+	func check(c):
+		return c in dic.keys()
+	
+	func lex(letter):
+		Reader.add_token_literal(dic[letter], letter)
+		

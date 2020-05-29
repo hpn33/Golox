@@ -46,6 +46,9 @@ func compile():
 	
 	processor.compile()
 	
+#	for tok in Reader.tokens:
+#		print(tok.type)
+	
 	output.text = Reader.output()
 
 
@@ -53,7 +56,8 @@ func _on_Timer_timeout() -> void:
 	compile()
 
 func _on_SimpleText_pressed() -> void:
-	input.text = """print 'hello world'\nprint 'hello world'"""
+	input.text = """(){}.,-+;*"""
+#	input.text = """print 'hello world'\nprint 'hello world'"""
 #	input.text = """print 'hello world"""
 	input.emit_signal("text_changed")
 

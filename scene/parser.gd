@@ -22,7 +22,7 @@ func keywords_parser(token_array: Array) -> String:
 			can_read = false
 			continue
 		
-		var tok :u.Token= token_array[index]
+		var tok = token_array[index]
 		
 		if tok.text == 'print':
 			if not (index +1 < token_array.size()):
@@ -33,7 +33,7 @@ func keywords_parser(token_array: Array) -> String:
 			else:
 				index += 1
 				tok = token_array[index]
-				if tok.type == 'string':
+				if tok.type == TokenType.STRING:
 					print(tok.text)
 					index += 1
 					continue

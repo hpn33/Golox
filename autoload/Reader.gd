@@ -60,7 +60,15 @@ func fresh():
 func substr(from = start, to = current):
 	return source.substr(from, to - from)
 
+func selected_text():
+	return substr()
 
-func add_token(token):
+
+func add_token(token: Token):
 	tokens.append(token)
 
+func add_token_type(type):
+	add_token(Token.new(type, null))
+
+func add_token_literal(type, literal):
+	add_token(Token.new(type, selected_text(), literal, line))        

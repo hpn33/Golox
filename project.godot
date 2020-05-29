@@ -8,9 +8,14 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Object",
+"class": "Token",
+"language": "GDScript",
+"path": "res://autoload/Token.gd"
+} ]
 _global_script_class_icons={
-
+"Token": ""
 }
 
 [application]
@@ -24,6 +29,7 @@ config/icon="res://icon.png"
 ErrorHandler="*res://autoload/ErrorHandler.gd"
 Reader="*res://autoload/Reader.gd"
 u="*res://autoload/Util.gd"
+TokenType="*res://autoload/TokenType.gd"
 
 [rendering]
 
