@@ -14,6 +14,6 @@ func _ready():
 
 
 func refresh(errors):
-	outputs = errors
+	outputs += errors
 	
 	edit_text.text = str(outputs)

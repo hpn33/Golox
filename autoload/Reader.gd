@@ -40,6 +40,16 @@ func peek_next():
 	return source[current + 1]
 
 
+func match(expected) -> bool:
+	if is_at_end():
+		 return false;                         
+	
+	if source[current] != expected:
+		return false
+	
+	current += 1
+	return true   
+
 
 func output():
 	return str(tokens)

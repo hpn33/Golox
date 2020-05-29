@@ -48,13 +48,11 @@ func scan_token():
 #			action.lex(c)
 #			break
 	
-	Reader.add_token({type = "string", body ='value'})
-	
 	if false:
 		pass
 	
 	else:
-		ErrorHandler.error(str(Reader.line) + ": Unexpected character.")
+		ErrorHandler.error(str(Reader.line) + ": \""+ c + "\" : Unexpected character.")
 
 
 
