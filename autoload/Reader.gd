@@ -64,6 +64,9 @@ func selected_text():
 	return substr()
 
 
+func next_line():
+	line += 1
+
 func add_token(token: Token):
 	tokens.append(token)
 

@@ -32,6 +32,8 @@ var actions := [
 	SingleLetterAction.new(),
 	OperatorsAction.new(),
 	CommentOrSlashAction.new(),
+	WhiteSpaceAction.new(),
+	NextLineAction.new()
 #	StringAction.new()
 ]
 
@@ -245,4 +247,22 @@ class CommentOrSlashAction:
 		
 		else:
 			Reader.add_token_literal(TokenType.SLASH, letter)
+		
+
+class WhiteSpaceAction:
+	
+	func check(c):
+		return c in [' ', '\r', '\t']
+	
+	func lex(letter):
+		pass
+		
+
+class NextLineAction:
+	
+	func check(c):
+		return c == '\n'
+	
+	func lex(letter):
+		Reader.next_line()
 		
