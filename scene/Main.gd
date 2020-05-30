@@ -46,9 +46,6 @@ func compile():
 	
 	processor.compile()
 	
-#	for tok in Reader.tokens:
-#		print(tok.type)
-	
 	output.text = Reader.output()
 
 
