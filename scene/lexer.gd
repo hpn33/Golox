@@ -14,10 +14,6 @@ func do():
 func scan_tokens():
 	while not Reader.is_at_end():
 		
-		if ErrorHandler.had_error:
-			ErrorHandler.show_error()
-#			break
-		
 		Reader.fresh()
 		scan_token()
 	
@@ -44,9 +40,6 @@ func scan_token():
 	var c = Reader.advance()
 	
 	var error = true
-#	print(c)
-	
-	
 	
 	
 	
@@ -59,7 +52,7 @@ func scan_token():
 	
 	
 	if error:
-		ErrorHandler.error(str(Reader.line) + ": \""+ c + "\" : Unexpected character.")
+		ErrorHandler.error("%d: %s: Unexpected character." % [Reader.line, c])
 
 
 
@@ -182,14 +175,14 @@ class StringAction:
 		# Unterminated string.
 		if Reader.is_at_end():
 			ErrorHandler.error('%d: Unterminated string.' % Reader.line)
+			print('not complete string')
+			print(ErrorHandler.errors)
 			return
 		
 		# The closing ".
 		Reader.advance()
 		
 		# Trim the surrounding quotes
-#		var value = Reader.substr(Reader.start + 1, Reader.current - 1)
-		
 		Reader.add_token_literal(TokenType.STRING, Reader.selected_string())
 		
 

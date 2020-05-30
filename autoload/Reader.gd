@@ -11,6 +11,9 @@ var line := 1
 
 func init(input):
 	
+	start = 0
+	current = 0
+	line = 1
 	source = input
 	tokens.clear()
 

@@ -5,6 +5,8 @@ onready var update_label = $UI/HBoxContainer/L1/InputPart/VBox/bar/update/Label
 onready var compile_time_label = $UI/HBoxContainer/L1/InputPart/VBox/bar/update/CompileTime
 onready var update_progress = $UI/HBoxContainer/L1/InputPart/VBox/bar/update/Progress
 
+onready var error_panel = $UI/HBoxContainer/ErrorPanel
+
 onready var input = $UI/HBoxContainer/L1/InputPart/VBox/input
 
 onready var output = $UI/HBoxContainer/L1/OutputPart/output
@@ -41,6 +43,7 @@ func _on_input_text_changed() -> void:
 func compile():
 	
 	ErrorHandler.clear()
+	error_panel.clean()
 	
 	Reader.init(input.text)
 	
@@ -64,8 +67,8 @@ func _on_SimpleText_pressed() -> void:
 #"""
 
 	
-	input.text = """print 'hello world'\nprint 'hello world'"""
 #	input.text = """print 'hello world'\nprint 'hello world'"""
+	input.text = """print 'hello world'\nprint 'hello world"""
 #	input.text = """print 'hello world"""
 	input.emit_signal("text_changed")
 
