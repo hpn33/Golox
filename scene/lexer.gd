@@ -28,8 +28,10 @@ func scan_tokens():
 
 
 
-var actions = [
+var actions := [
 	SingleLetterAction.new(),
+	OperatorsAction.new(),
+	CommentOrSlashAction.new(),
 #	StringAction.new()
 ]
 
@@ -191,18 +193,6 @@ class StringAction:
 
 class SingleLetterAction:
 	
-	
-#	case '(': addToken(LEFT_PAREN); break;     
-#	  case ')': addToken(RIGHT_PAREN); break;    
-#	  case '{': addToken(LEFT_BRACE); break;     
-#	  case '}': addToken(RIGHT_BRACE); break;    
-#	  case ',': addToken(COMMA); break;          
-#	  case '.': addToken(DOT); break;            
-#	  case '-': addToken(MINUS); break;          
-#	  case '+': addToken(PLUS); break;           
-#	  case ';': addToken(SEMICOLON); break;      
-#	  case '*': addToken(STAR); break; 
-	
 	var dic := {
 		'(': TokenType.LEFT_PAREN,
 		')': TokenType.RIGHT_PAREN,
@@ -222,4 +212,37 @@ class SingleLetterAction:
 	
 	func lex(letter):
 		Reader.add_token_literal(dic[letter], letter)
+		
+
+
+class OperatorsAction:
+	
+	var dic := {
+		'!': [TokenType.BANG_EQUAL, TokenType.BANG],
+		'=': [TokenType.EQUAL_EQUAL, TokenType.EQUAL],
+		'<': [TokenType.LESS_EQUAL, TokenType.LESS],
+		'>': [TokenType.GREATER_EQUAL, TokenType.GREATER]
+	}
+	
+	
+	func check(c):
+		return c in dic
+	
+	func lex(letter):
+		Reader.add_token_literal(dic[letter][0] if Reader.match('=') else dic[letter][1], letter)
+		
+
+
+class CommentOrSlashAction:
+	
+	func check(c):
+		return c == '/'
+	
+	func lex(letter):
+		if Reader.match('/'):
+			while Reader.peek() != '\n' and not Reader.is_at_end():
+				Reader.advance()
+		
+		else:
+			Reader.add_token_literal(TokenType.SLASH, letter)
 		
