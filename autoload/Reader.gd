@@ -67,7 +67,7 @@ func selected_text():
 	return substr()
 
 func selected_string():
-	return substr(start+1, current - 2)
+	return substr(start+1, current - 1)
 
 
 func next_line():
