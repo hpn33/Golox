@@ -153,8 +153,8 @@ text = "Error"
 
 [node name="TextEdit" type="TextEdit" parent="UI/HBoxContainer/ErrorPanel"]
 margin_top = 18.0
-margin_right = 340.0
-margin_bottom = 600.0
+margin_right = 331.0
+margin_bottom = 589.0
 size_flags_vertical = 3
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="UI/HBoxContainer/L1/InputPart/VBox/bar/SimpleText" to="." method="_on_SimpleText_pressed"]

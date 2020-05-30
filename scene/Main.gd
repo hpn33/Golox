@@ -58,7 +58,7 @@ func _on_Timer_timeout() -> void:
 func _on_SimpleText_pressed() -> void:
 #	input.text = """(){},.-+;*"""
 	input.text = """!!====<<=>>="""
-	input.text = """/\n// hello"""
+	input.text = """// hello\n/ /"""
 #	input.text = """print 'hello world'\nprint 'hello world'"""
 #	input.text = """print 'hello world"""
 	input.emit_signal("text_changed")

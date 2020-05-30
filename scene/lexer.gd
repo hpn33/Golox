@@ -16,7 +16,7 @@ func scan_tokens():
 		
 		if ErrorHandler.had_error:
 			ErrorHandler.show_error()
-			break
+#			break
 		
 		Reader.fresh()
 		scan_token()
