@@ -33,8 +33,8 @@ var actions := [
 	OperatorsAction.new(),
 	CommentOrSlashAction.new(),
 	WhiteSpaceAction.new(),
-	NextLineAction.new()
-#	StringAction.new()
+	NextLineAction.new(),
+	StringAction.new()
 ]
 
 
@@ -174,22 +174,23 @@ class StringAction:
 		
 		while not Reader.is_at_end() and Reader.peek() != symbol:
 			
+			if Reader.peek() == '\n':
+				Reader.next_line()
+			
 			Reader.advance()
 		
 		# Unterminated string.
 		if Reader.is_at_end():
-			# Lox.error(self.line, 'Unterminated string.')
-			ErrorHandler.error('Unterminated string.')
+			ErrorHandler.error('%d: Unterminated string.' % Reader.line)
+			return
 		
 		# The closing ".
-#		Reader.advance()
+		Reader.advance()
 		
 		# Trim the surrounding quotes
-#		value = Reader.source[self.start + 1: self.current - 1]
-		var value = Reader.substr(Reader.start + 1, Reader.current - 1)
-		# print(value)
-		print(value)
-#		Reader.add_token({type = "string", body =value})
+#		var value = Reader.substr(Reader.start + 1, Reader.current - 1)
+		
+		Reader.add_token_literal(TokenType.STRING, Reader.selected_string())
 		
 
 

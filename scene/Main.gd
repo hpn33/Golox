@@ -56,8 +56,15 @@ func _on_SimpleText_pressed() -> void:
 #	input.text = """(){},.-+;*"""
 #	input.text = """!!====<<=>>="""
 #	input.text = """// hello\n/ /"""
-	input.text = """( ){\r}(\t)\n"""
+#	input.text = """( ){\r}(\t)\n"""
+#	input.text = \
+#"""// this is a comment
+#(( )){} // grouping stuff
+#!*+-/=<> <= == // operators
+#"""
+
 	
+	input.text = """print 'hello world'\nprint 'hello world'"""
 #	input.text = """print 'hello world'\nprint 'hello world'"""
 #	input.text = """print 'hello world"""
 	input.emit_signal("text_changed")
