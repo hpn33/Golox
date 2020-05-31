@@ -25,12 +25,14 @@ func scan_tokens():
 
 
 var actions := [
+	DigitAction.new(),
 	SingleLetterAction.new(),
 	OperatorsAction.new(),
 	CommentOrSlashAction.new(),
 	WhiteSpaceAction.new(),
 	NextLineAction.new(),
-	StringAction.new()
+	StringAction.new(),
+	
 ]
 
 
@@ -259,4 +261,24 @@ class NextLineAction:
 	
 	func lex(letter):
 		Reader.next_line()
+		
+
+class DigitAction:
+	
+	func check(c):
+		return Reader.is_digit(c)
+	
+	func lex(letter):
+		while Reader.is_digit(Reader.peek()):
+			Reader.advance();
+		
+		# Look for a fractional part.
+		if Reader.peek() == '.' && Reader.is_digit(Reader.peek_next()):
+			# Consume the "."                                      
+			Reader.advance();                                              
+		
+			while Reader.is_digit(Reader.peek()): 
+				Reader.advance();
+		
+		Reader.add_token_literal(TokenType.NUMBER, float(Reader.selected_text()))
 		

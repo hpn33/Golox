@@ -29,6 +29,10 @@ func is_at_end():
 	return current >= len(source)
 
 
+func is_digit(letter):
+	return '0' <= letter && letter <= '9'
+
+
 func peek():
 	if is_at_end():
 		return '\\0'
@@ -55,7 +59,16 @@ func match(expected) -> bool:
 
 
 func output():
-	return str(tokens)
+	
+	
+	var s := ''
+	
+	for tok in tokens:
+		s += str(tok) + '\n'
+	
+	return s
+	
+#	return str(tokens)
 
 func fresh():
 	start = current

@@ -20,7 +20,7 @@ onready var processor = $processor
 func _ready() -> void:
 	update_progress.max_value = timer.wait_time
 	
-	pass
+	_on_SimpleText_pressed()
 
 func _process(delta: float) -> void:
 	update_label.text = str(timer.time_left)
@@ -29,7 +29,8 @@ func _process(delta: float) -> void:
 		update_progress.value = 0
 	else:
 		update_progress.value = timer.wait_time - timer.time_left
-	pass
+	
+
 
 func _on_input_text_changed() -> void:
 	timer.start()
@@ -67,9 +68,10 @@ func _on_SimpleText_pressed() -> void:
 #"""
 
 	
-	input.text = """print 'hello world'\nprint 'hello world'"""
+#	input.text = """print 'hello world'\nprint 'hello world'"""
 #	input.text = """print 'hello world'\nprint 'hello world"""
 #	input.text = """print 'hello world"""
+	input.text = """12 \n10.10"""
 	input.emit_signal("text_changed")
 
 
