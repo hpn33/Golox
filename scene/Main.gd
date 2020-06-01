@@ -69,9 +69,9 @@ func _on_SimpleText_pressed() -> void:
 
 	
 #	input.text = """print 'hello world'\nprint 'hello world'"""
-#	input.text = """print 'hello world'\nprint 'hello world"""
+	input.text = """print 'hello world\nprint 'hello world'"""
 #	input.text = """print 'hello world"""
-	input.text = """12 \n10.10"""
+#	input.text = """12 \n10.10"""
 	input.emit_signal("text_changed")
 
 

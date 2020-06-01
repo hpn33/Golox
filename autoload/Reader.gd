@@ -33,6 +33,17 @@ func is_digit(letter):
 	return '0' <= letter && letter <= '9'
 
 
+func is_alpha(letter):
+	return ('a' <= letter and letter <= 'z')\
+		or ('A' <= letter and letter <= 'Z')\
+		or letter == '_'
+
+func is_alpha_numeric(letter):
+	return is_alpha(letter) || is_digit(letter)
+
+
+
+
 func peek():
 	if is_at_end():
 		return '\\0'
@@ -67,8 +78,7 @@ func output():
 		s += str(tok) + '\n'
 	
 	return s
-	
-#	return str(tokens)
+
 
 func fresh():
 	start = current

@@ -14,3 +14,4 @@ func _init(_type, _lexeme, _literal = null, _line: int = 0):
 
 func _to_string():
 	return "[%d \"%s\" {%s}]" % [type, lexeme, literal]
+

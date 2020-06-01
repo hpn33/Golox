@@ -25,7 +25,8 @@ func scan_tokens():
 
 
 var actions := [
-	DigitAction.new(),
+	NumberAction.new(),
+	IdentifierAction.new(),
 	SingleLetterAction.new(),
 	OperatorsAction.new(),
 	CommentOrSlashAction.new(),
@@ -177,7 +178,6 @@ class StringAction:
 		# Unterminated string.
 		if Reader.is_at_end():
 			ErrorHandler.error('%d: Unterminated string.' % Reader.line)
-			print('not complete string')
 			print(ErrorHandler.errors)
 			return
 		
@@ -263,7 +263,7 @@ class NextLineAction:
 		Reader.next_line()
 		
 
-class DigitAction:
+class NumberAction:
 	
 	func check(c):
 		return Reader.is_digit(c)
@@ -281,4 +281,25 @@ class DigitAction:
 				Reader.advance();
 		
 		Reader.add_token_literal(TokenType.NUMBER, float(Reader.selected_text()))
+
+
+class IdentifierAction:
+	
+	
+	
+	func check(c):
+		return Reader.is_alpha(c)
+	
+	func lex(letter):
 		
+		while Reader.is_alpha_numeric(Reader.peek()):
+			Reader.advance()
+		
+		# See if the identifier is a reserved word.
+
+		var text = Reader.selected_text()
+		var type = TokenType.get_keywords(text)
+		
+#		Reader.add_token_type(type);
+		Reader.add_token_literal(type, text);
+
