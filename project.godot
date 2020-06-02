@@ -30,6 +30,7 @@ ErrorHandler="*res://autoload/ErrorHandler.gd"
 Reader="*res://autoload/Reader.gd"
 u="*res://autoload/Util.gd"
 TokenType="*res://autoload/TokenType.gd"
+Tester="*res://autoload/Tester.gd"
 
 [rendering]
 
