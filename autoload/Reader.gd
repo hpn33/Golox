@@ -21,11 +21,9 @@ func init(input):
 func advance():
 	current += 1
 	
-	# print(self.source[self.current - 1])
 	return source[current - 1]
 
 func is_at_end():
-	# print(self.current, ':', len(self.source))
 	return current >= len(source)
 
 
@@ -48,7 +46,6 @@ func peek():
 	if is_at_end():
 		return '\\0'
 	
-	# print(self.source[self.current])
 	return source[current]
 
 func peek_next():

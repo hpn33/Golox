@@ -77,7 +77,7 @@ func keywords_pattern(letter_array: PoolStringArray) -> Array:
 		var charr := letter_array[index]
 		if charr != u.white_space:
 			lexeme += charr
-#		print(lexeme)
+
 		if index + 1 < letter_array.size():
 			if letter_array[index + 1] == u.white_space or letter_array[index + 1] in u.words or lexeme in u.words:
 				if lexeme != '':
@@ -93,7 +93,7 @@ func keywords_pattern(letter_array: PoolStringArray) -> Array:
 				
 				token_array.append(token)
 				lexeme = ''
-#		print(lexeme)
+
 	
 	token_array = detect_string(token_array)
 	
