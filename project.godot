@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Object",
 "class": "Token",
 "language": "GDScript",
-"path": "res://autoload/Token.gd"
+"path": "res://core/Token.gd"
 } ]
 _global_script_class_icons={
 "Token": ""
