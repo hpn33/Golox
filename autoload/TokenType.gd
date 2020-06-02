@@ -41,6 +41,29 @@ var keywords := {
 	'while': WHILE
 }
 
+
+var single_chars := {
+	'(': LEFT_PAREN,
+	')': RIGHT_PAREN,
+	'{': LEFT_BRACE,
+	'}': RIGHT_BRACE,
+	',': COMMA,
+	'.': DOT,
+	'-': MINUS,
+	'+': PLUS,
+	';': SEMICOLON,
+	'*': STAR
+}
+
+
+var operators := {
+	'!': [BANG_EQUAL, BANG],
+	'=': [EQUAL_EQUAL, EQUAL],
+	'<': [LESS_EQUAL, LESS],
+	'>': [GREATER_EQUAL, GREATER]
+}
+
+
 func get_keywords(text):
 	
 	if keywords.has(text):

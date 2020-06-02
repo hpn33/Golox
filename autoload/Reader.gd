@@ -57,7 +57,7 @@ func peek_next():
 
 func match(expected) -> bool:
 	if is_at_end():
-		 return false;                         
+		 return false
 	
 	if source[current] != expected:
 		return false

@@ -27,13 +27,15 @@ func scan_tokens():
 var actions := [
 	NumberAction.new(),
 	IdentifierAction.new(),
+	
 	SingleLetterAction.new(),
 	OperatorsAction.new(),
+	
 	CommentOrSlashAction.new(),
 	WhiteSpaceAction.new(),
 	NextLineAction.new(),
-	StringAction.new(),
 	
+	StringAction.new(),
 ]
 
 
@@ -191,43 +193,21 @@ class StringAction:
 
 class SingleLetterAction:
 	
-	var dic := {
-		'(': TokenType.LEFT_PAREN,
-		')': TokenType.RIGHT_PAREN,
-		'{': TokenType.LEFT_BRACE,
-		'}': TokenType.RIGHT_BRACE,
-		',': TokenType.COMMA,
-		'.': TokenType.DOT,
-		'-': TokenType.MINUS,
-		'+': TokenType.PLUS,
-		';': TokenType.SEMICOLON,
-		'*': TokenType.STAR
-	}
-	
-	
 	func check(c):
-		return c in dic.keys()
+		return c in TokenType.single_chars.keys()
 	
 	func lex(letter):
-		Reader.add_token_literal(dic[letter], letter)
+		Reader.add_token_literal(TokenType.single_chars[letter], letter)
 		
 
 
 class OperatorsAction:
 	
-	var dic := {
-		'!': [TokenType.BANG_EQUAL, TokenType.BANG],
-		'=': [TokenType.EQUAL_EQUAL, TokenType.EQUAL],
-		'<': [TokenType.LESS_EQUAL, TokenType.LESS],
-		'>': [TokenType.GREATER_EQUAL, TokenType.GREATER]
-	}
-	
-	
 	func check(c):
-		return c in dic
+		return c in TokenType.operators
 	
 	func lex(letter):
-		Reader.add_token_literal(dic[letter][0] if Reader.match('=') else dic[letter][1], letter)
+		Reader.add_token_literal(TokenType.operators[letter][0] if Reader.match('=') else TokenType.operators[letter][1], letter)
 		
 
 
@@ -241,6 +221,17 @@ class CommentOrSlashAction:
 			while Reader.peek() != '\n' and not Reader.is_at_end():
 				Reader.advance()
 		
+		elif Reader.match('*'):
+			while not Reader.is_at_end():
+				
+				if Reader.match('*') and Reader.match('/'):
+					break
+				
+				if Reader.peek() == '\n':
+					Reader.next_line()
+				
+				Reader.advance()
+			
 		else:
 			Reader.add_token_literal(TokenType.SLASH, letter)
 		
@@ -302,4 +293,5 @@ class IdentifierAction:
 		
 #		Reader.add_token_type(type);
 		Reader.add_token_literal(type, text);
+
 
