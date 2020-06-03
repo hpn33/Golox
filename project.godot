@@ -9,25 +9,61 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "AstPrinter",
+"language": "GDScript",
+"path": "res://tool/ast/AstPrinter.gd"
+}, {
+"base": "Reference",
+"class": "Binary",
+"language": "GDScript",
+"path": "res://core/ast/Binary.gd"
+}, {
+"base": "Reference",
+"class": "Expr",
+"language": "GDScript",
+"path": "res://core/ast/Expr.gd"
+}, {
 "base": "Reference",
 "class": "FileInfo",
 "language": "GDScript",
 "path": "res://util/FileInfo.gd"
+}, {
+"base": "Reference",
+"class": "Grouping",
+"language": "GDScript",
+"path": "res://core/ast/Grouping.gd"
 }, {
 "base": "Node",
 "class": "IOUtil",
 "language": "GDScript",
 "path": "res://util/IOUnit.gd"
 }, {
+"base": "Reference",
+"class": "Literal",
+"language": "GDScript",
+"path": "res://core/ast/Literal.gd"
+}, {
 "base": "Object",
 "class": "Token",
 "language": "GDScript",
 "path": "res://core/Token.gd"
+}, {
+"base": "Reference",
+"class": "Unary",
+"language": "GDScript",
+"path": "res://core/ast/Unary.gd"
 } ]
 _global_script_class_icons={
+"AstPrinter": "",
+"Binary": "",
+"Expr": "",
 "FileInfo": "",
+"Grouping": "",
 "IOUtil": "",
-"Token": ""
+"Literal": "",
+"Token": "",
+"Unary": ""
 }
 
 [application]

@@ -17,7 +17,7 @@ var struc := {
 		'expression': 'Expr'
 	},
 	'Literal': {
-		'value': ''
+		'value': 'Object'
 	},
 	'Unary': {
 		'operator': 'Token',
@@ -26,39 +26,32 @@ var struc := {
 }
 
 
+var path = 'res://core/ast/'
+
 func _ready():
 	
-	
-	
-	
-	define_ast('core/ast', "Expr", struc)
+	define_ast("Expr", struc)
 	
 
-func define_ast(output_dir: String,  base_name: String, types: Dictionary):
+func define_ast(base_name: String, types: Dictionary):
 
 	var writer := TextWriter.new()
 	
 	writer.add('extends Object')\
-		.add_line(2)\
-		.new_line('class %s:' % base_name)\
-		.add_level()\
+		.new_line('class_name ' + base_name)\
 		.add_line()\
-		.new_line('func _init(): pass')\
-		.add_line()\
-		.sub_level()\
 		.done()
 	
 	define_visitor(writer, base_name, types)
 	
 	
 	# The base accept() method.
-	writer.add_level()\
-		.add_line()\
+	writer.add_line()\
 		.new_line("func accept(visitor): pass")\
-		.sub_level()\
+		.add_line(2)\
 		.done()
 	
-	writer.add_line(2).done()
+	create_file(base_name + '.gd' , writer)
 	
 	# The AST classes.
 	for clas_name in types.keys():
@@ -66,64 +59,66 @@ func define_ast(output_dir: String,  base_name: String, types: Dictionary):
 		define_type(writer, base_name, clas_name, types[clas_name])
 	
 	
-	
-	var path = 'res://%s/' % output_dir
+
+func create_file(_file_name, writer):
 	
 	var iou := IOUtil.new()
 	
 	iou.be(path)
 	
-	var file = iou.open_file('%s.gd' % base_name)
+	if not iou.file_exists(_file_name):
+		iou.make_file(_file_name)
+	
+	var file = iou.open_file(_file_name)
 	
 	file.store_string(writer.text)
 	file = ''
 	iou.close_file()
 	
-	$TextEdit.text = writer.text
-	
+	writer.clear()
 
 
 func define_visitor(writer: TextWriter, base_name: String, types: Dictionary):
 	
-	writer.add_level()
-	
 	for type_name in types.keys():
 		
-		writer.new_line('func visit_%s_%s(%s: %s): pass' % [type_name, base_name, base_name.to_lower(), type_name])
+		writer.new_line('func visit_%s_%s(%s): pass' % [type_name.to_lower(), base_name.to_lower(), base_name.to_lower()])
 	
-	writer.sub_level()
 
 
 func define_type(writer: TextWriter, base_name: String, clas_name: String, field_list: Dictionary):
-	writer.new_line("class %s:" % clas_name)\
-		.add_level()\
-		.new_line('extends %s' % base_name)\
-		.new_line()\
+	writer.add("extends Object")\
+		.new_line('class_name ' + clas_name)\
+		.add_line()\
 		.done()
 	
 	
 	var vars := ''
 	# Fields.
-#	var fields = field_list.split(", ")
+#	for i in field_list.size():
+#
+#		var key = field_list.keys()[i]
+#
+#		var variable = key
+#
+#		var type = field_list[key]
+#
+#		if type != '':
+#			variable += ': %s' % type
+#
+#
+#		vars += variable + (', 'if i != field_list.size()-1 else '')
+#
+#		variable = 'var ' + variable
+#		writer.new_line(variable).done()
+	
 	for i in field_list.size():
-		
 		var key = field_list.keys()[i]
 		
-		var variable = key
-		
-		var type = field_list[key]
-		
-		if type != '':
-			variable += ': %s' % type
-		
-		
-		field_list.size()
-		vars += variable + (', 'if i != field_list.size()-1 else '')
-		
-		variable = 'var ' + variable
-		writer.new_line(variable).done()
+		vars += key + (', 'if i != field_list.size()-1 else '')
+		writer.new_line('var ' + key).done()
 	
-	writer.new_line().done()
+	writer.add_line().done()
 	
 	# Constructor.
 	writer.new_line("func _init(%s):" % str(vars))\
@@ -142,10 +137,11 @@ func define_type(writer: TextWriter, base_name: String, clas_name: String, field
 	# Visitor pattern.
 	writer.new_line("func accept(visitor):")\
 		.add_level()\
-		.new_line("return visitor.visit_%s_%s(self)" % [clas_name, base_name])\
-		.sub_level(2)\
-		.add_line(2)\
+		.new_line("return visitor.visit_%s_%s(self)" % [clas_name.to_lower(), base_name.to_lower()])\
 		.done()
+	
+	create_file(clas_name + '.gd', writer)
+	
 
 
 
