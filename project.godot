@@ -9,12 +9,24 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "FileInfo",
+"language": "GDScript",
+"path": "res://util/FileInfo.gd"
+}, {
+"base": "Node",
+"class": "IOUtil",
+"language": "GDScript",
+"path": "res://util/IOUnit.gd"
+}, {
 "base": "Object",
 "class": "Token",
 "language": "GDScript",
 "path": "res://core/Token.gd"
 } ]
 _global_script_class_icons={
+"FileInfo": "",
+"IOUtil": "",
 "Token": ""
 }
 
