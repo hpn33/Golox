@@ -48,11 +48,32 @@ func parenthesize(nam: String, exprs):
 	
 	var text := ''
 	
-	text += '(' + nam
+	text += '('
 	
+	var es := []
 	for expr in exprs:
-		text += ' ' + expr.accept(self)
+		es.append(expr.accept(self))
+	
+	if es.size() == 2:
+		text += es[0] + ' ' + nam + ' ' + es[1]
+	
+	else:
+		text += nam + ' ' + es[0]
 	
 	text += ")"
 	
 	return text
+
+
+#func parenthesize(nam: String, exprs):
+#
+#	var text := ''
+#
+#	text += '(' + name
+#
+#	for expr in exprs:
+#		text += ' ' + expr.accept(self)
+#
+#	text += ")"
+#
+#	return text
