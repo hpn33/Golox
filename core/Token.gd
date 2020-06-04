@@ -1,12 +1,11 @@
-extends Object
 class_name Token
 
-var type
-var lexeme                            
-var literal                                           
-var line: int 
+var type: int
+var lexeme
+var literal
+var line: int
 
-func _init(_type, _lexeme, _literal = null, _line: int = 0):
+func _init(_type: int, _lexeme, _literal = null, _line: int = 0):
 	type = _type
 	lexeme = _lexeme
 	literal = _literal

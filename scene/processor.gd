@@ -11,4 +11,11 @@ func compile():
 	
 	Tester.stop()
 	
-#	return parser.do()
+	Tester.start('parser')
+	
+	var expr = parser.do()
+	
+	Tester.stop()
+	
+	return expr
+	

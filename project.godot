@@ -44,7 +44,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/ast/Literal.gd"
 }, {
-"base": "Object",
+"base": "Reference",
 "class": "Token",
 "language": "GDScript",
 "path": "res://core/Token.gd"

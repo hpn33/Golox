@@ -48,9 +48,13 @@ func compile():
 	
 	Reader.init(input.text)
 	
-	processor.compile()
+	var expression = processor.compile()
 	
-	output.text = Reader.output()
+	if ErrorHandler.had_error:
+		output.text = 'error exist'
+		
+	else:
+		output.text = AstPrinter.new().ast_print(expression)
 
 
 func _on_Timer_timeout() -> void:
@@ -72,15 +76,19 @@ func _on_SimpleText_pressed() -> void:
 #	input.text = """print 'hello world'\nprint 'hello world'"""
 #	input.text = """print 'hello world\nprint 'hello world'"""
 
-	input.text =\
-"""// print 'hello world
-hello
-/*
-print 'hello world'
-*/"""
+#	input.text =\
+#"""// print 'hello world
+#hello
+#/*
+#print 'hello world'
+#*/"""
 
 #	input.text = """print 'hello world"""
 #	input.text = """12 \n10.10"""
+#	input.text = """print('hello');"""
+#	input.text = """1+(2+3)""" # expr test
+#	input.text = """1+(2+3""" # with error
+	input.text = """1+(2 3)""" # with error
 	input.emit_signal("text_changed")
 
 

@@ -57,7 +57,7 @@ func scan_token():
 	
 	
 	if error:
-		ErrorHandler.error("%d: %s: Unexpected character." % [Reader.line, c])
+		ErrorHandler.error(Reader.line, "[%s]: Unexpected character." % c)
 
 
 
@@ -179,8 +179,7 @@ class StringAction:
 		
 		# Unterminated string.
 		if Reader.is_at_end():
-			ErrorHandler.error('%d: Unterminated string.' % Reader.line)
-			print(ErrorHandler.errors)
+			ErrorHandler.error(Reader.line, 'Unterminated string.')
 			return
 		
 		# The closing ".
