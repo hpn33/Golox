@@ -7,7 +7,6 @@ var current := 0
 func do(_tokens):
 	
 	tokens = _tokens
-	current = 0
 	
 	return expression()
 
