@@ -11,6 +11,8 @@ func _ready():
 
 func refresh(errors):
 	
+	edit_text.text = ''
+	
 	for error in errors:
 		edit_text.text += error + '\n'
 	

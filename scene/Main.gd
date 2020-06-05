@@ -12,7 +12,6 @@ onready var input = $UI/HBoxContainer/L1/InputPart/VBox/input
 onready var output = $UI/HBoxContainer/L1/OutputPart/output
 
 onready var timer = $Timer
-onready var compile_time = $CompileTime
 
 
 func _ready() -> void:
@@ -55,11 +54,21 @@ func compile():
 	Tester.stop()
 	### compiling
 	
+	
 	if ErrorHandler.had_error:
-		output.text = 'error exist'
-		
+		output.text = 'error exist.'
+	
 	else:
-		output.text = AstPrinter.new().ast_print(expression)
+		
+		Interpreter.new().interpret(expression); 
+		
+		if ErrorHandler.had_runtime_error:
+			output.text = 'runtime error exist.'
+		
+		else:
+			output.text = AstPrinter.new().ast_print(expression)
+	
+	
 
 
 func _on_Timer_timeout() -> void:
@@ -91,8 +100,10 @@ func _on_SimpleText_pressed() -> void:
 #	input.text = """print 'hello world"""
 #	input.text = """12 \n10.10"""
 #	input.text = """print('hello');"""
-	input.text = """1+(2+3)""" # expr test
+#	input.text = """1+(2+3)""" # expr test
 #	input.text = """1+(2+3""" # with error
 #	input.text = """1+(2 3)""" # with error
+#	input.text = """1+(2+'hello')""" # with error
+	input.text = """2+2==-2+3""" # with error
 	input.emit_signal("text_changed")
 

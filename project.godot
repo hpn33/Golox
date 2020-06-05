@@ -39,7 +39,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://util/IOUnit.gd"
 }, {
-"base": "Reference",
+"base": "Expr",
 "class": "Interpreter",
 "language": "GDScript",
 "path": "res://core/Interpreter.gd"

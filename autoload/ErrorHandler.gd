@@ -5,6 +5,7 @@ signal exporting(errors)
 
 var errors := []
 var had_error := false
+var had_runtime_error := false
 
 
 func error(line: int, message: String):
@@ -26,15 +27,24 @@ func error_token(token: Token, message: String):
 	
 	else:
 		report(token.line, " at '%s'" % token.lexeme, message)
- 
+
+
+func runtime_token(token: Token, message: String):
+	
+	errors.append("%s\n[line %d]" % [message, token.line])
+	
+	had_runtime_error = true
+	show_error()
+
 
 func show_error():
 	
 	emit_signal("exporting", errors)
-	clear()
+#	clear()
 
 func clear():
 	
 	errors.clear()
 	had_error = false
+	had_runtime_error = false
 
