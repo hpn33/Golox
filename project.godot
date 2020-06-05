@@ -40,9 +40,24 @@ _global_script_classes=[ {
 "path": "res://util/IOUnit.gd"
 }, {
 "base": "Reference",
+"class": "Lexer",
+"language": "GDScript",
+"path": "res://core/Lexer.gd"
+}, {
+"base": "Reference",
+"class": "LexerAction",
+"language": "GDScript",
+"path": "res://core/LexerAction.gd"
+}, {
+"base": "Reference",
 "class": "Literal",
 "language": "GDScript",
 "path": "res://core/ast/Literal.gd"
+}, {
+"base": "Reference",
+"class": "Parser",
+"language": "GDScript",
+"path": "res://core/Parser.gd"
 }, {
 "base": "Reference",
 "class": "Token",
@@ -61,7 +76,10 @@ _global_script_class_icons={
 "FileInfo": "",
 "Grouping": "",
 "IOUtil": "",
+"Lexer": "",
+"LexerAction": "",
 "Literal": "",
+"Parser": "",
 "Token": "",
 "Unary": ""
 }
@@ -75,7 +93,6 @@ config/icon="res://icon.png"
 [autoload]
 
 ErrorHandler="*res://autoload/ErrorHandler.gd"
-Reader="*res://autoload/Reader.gd"
 u="*res://autoload/Util.gd"
 TokenType="*res://autoload/TokenType.gd"
 Tester="*res://autoload/Tester.gd"

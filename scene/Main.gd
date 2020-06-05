@@ -14,8 +14,6 @@ onready var output = $UI/HBoxContainer/L1/OutputPart/output
 onready var timer = $Timer
 onready var compile_time = $CompileTime
 
-onready var processor = $processor
-
 
 func _ready() -> void:
 	update_progress.max_value = timer.wait_time
@@ -46,9 +44,16 @@ func compile():
 	ErrorHandler.clear()
 	error_panel.clean()
 	
-	Reader.init(input.text)
 	
-	var expression = processor.compile()
+	### compiling
+	Tester.start('lexing')
+	var tokens = Lexer.new().do(input.text)
+#	var tokens = []
+	Tester.next('parser')
+	var expression = Parser.new().do(tokens)
+	
+	Tester.stop()
+	### compiling
 	
 	if ErrorHandler.had_error:
 		output.text = 'error exist'
@@ -86,11 +91,8 @@ func _on_SimpleText_pressed() -> void:
 #	input.text = """print 'hello world"""
 #	input.text = """12 \n10.10"""
 #	input.text = """print('hello');"""
-#	input.text = """1+(2+3)""" # expr test
+	input.text = """1+(2+3)""" # expr test
 #	input.text = """1+(2+3""" # with error
-	input.text = """1+(2 3)""" # with error
+#	input.text = """1+(2 3)""" # with error
 	input.emit_signal("text_changed")
 
-
-func _on_Compile_pressed() -> void:
-	compile()

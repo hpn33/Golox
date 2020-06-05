@@ -1,10 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scene/Main.gd" type="Script" id=1]
 [ext_resource path="res://scene/ErrorPanel.gd" type="Script" id=2]
-[ext_resource path="res://scene/parser.gd" type="Script" id=3]
-[ext_resource path="res://scene/lexer.gd" type="Script" id=5]
-[ext_resource path="res://scene/processor.gd" type="Script" id=6]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -15,16 +12,6 @@ one_shot = true
 
 [node name="CompileTime" type="Node" parent="."]
 pause_mode = 1
-
-[node name="processor" type="Node" parent="."]
-pause_mode = 1
-script = ExtResource( 6 )
-
-[node name="lexer" type="Node" parent="processor"]
-script = ExtResource( 5 )
-
-[node name="parser" type="Node" parent="processor"]
-script = ExtResource( 3 )
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
@@ -158,5 +145,5 @@ margin_bottom = 600.0
 size_flags_vertical = 3
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="UI/HBoxContainer/L1/InputPart/VBox/bar/SimpleText" to="." method="_on_SimpleText_pressed"]
-[connection signal="pressed" from="UI/HBoxContainer/L1/InputPart/VBox/bar/update3/Compile" to="." method="_on_Compile_pressed"]
+[connection signal="pressed" from="UI/HBoxContainer/L1/InputPart/VBox/bar/update3/Compile" to="." method="compile"]
 [connection signal="text_changed" from="UI/HBoxContainer/L1/InputPart/VBox/input" to="." method="_on_input_text_changed"]

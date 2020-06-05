@@ -1,12 +1,12 @@
-extends Node
+class_name Parser
 
 
 var tokens := []
 var current := 0
 
-func do():
+func do(_tokens):
 	
-	tokens = Reader.tokens
+	tokens = _tokens
 	current = 0
 	
 	return expression()
