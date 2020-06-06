@@ -49,7 +49,7 @@ func compile():
 	var tokens = Lexer.new().do(input.text)
 #	var tokens = []
 	Tester.next('parser')
-	var expression = Parser.new().do(tokens)
+	var statements = Parser.new().do(tokens)
 	
 	Tester.stop()
 	### compiling
@@ -60,13 +60,13 @@ func compile():
 	
 	else:
 		
-		Interpreter.new().interpret(expression); 
+		Interpreter.new().interpret(statements); 
 		
 		if ErrorHandler.had_runtime_error:
 			output.text = 'runtime error exist.'
 		
-		else:
-			output.text = AstPrinter.new().ast_print(expression)
+#		else:
+#			output.text = AstPrinter.new().ast_print(statements)
 	
 	
 
@@ -104,6 +104,10 @@ func _on_SimpleText_pressed() -> void:
 #	input.text = """1+(2+3""" # with error
 #	input.text = """1+(2 3)""" # with error
 #	input.text = """1+(2+'hello')""" # with error
-	input.text = """2+2==-2+3""" # with error
+#	input.text = """2+2==-2+3""" 
+	input.text =\
+"""print 'one';
+print true;
+print 2 + 1;""" # with error
 	input.emit_signal("text_changed")
 

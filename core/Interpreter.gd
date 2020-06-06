@@ -1,13 +1,18 @@
-extends Expr
 class_name Interpreter
 
 
 
 
-func interpret(expression):
-	var value = evaluate(expression)
+func interpret(statements):
 	
-	print(stringify(value))
+	for statement in statements:
+		
+		execute(statement)
+
+
+
+func execute(stmt: Stmt):
+	stmt.accept(self)
 
 
 func stringify(object):
@@ -106,9 +111,6 @@ func visit_unary_expr(expr):
 	return null
 
 
-func accept(visitor): pass
-
-
 
 
 func evaluate(expr):
@@ -116,6 +118,23 @@ func evaluate(expr):
 		return null
 	
 	return expr.accept(self)
+
+
+func visit_expression_stmt(stmt: Expresion):
+	evaluate(stmt.expression)
+	
+	return null 
+
+
+func visit_print_stmt(stmt: Print):
+	var value = evaluate(stmt.expression)
+	
+	print(stringify(value))
+	
+	return null
+
+
+
 
 
 func is_truthy(object):

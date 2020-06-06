@@ -8,14 +8,14 @@ func do(_tokens):
 	
 	tokens = _tokens
 	
-	return expression()
+	return parse()
 
 
 func parse() -> Array:
 	
-	var statements = []
+	var statements := []
 	while not is_at_end():
-		statements.add(statement())
+		statements.append(statement())
 	
 	return statements
 
