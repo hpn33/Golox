@@ -11,6 +11,13 @@ func do(_tokens):
 	return expression()
 
 
+func parse() -> Array:
+	
+	var statements = []
+	while not is_at_end():
+		statements.add(statement())
+	
+	return statements
 
 
 
@@ -58,6 +65,31 @@ func previous() -> Token:
 func expression():
 	return equality()
 
+
+func statement() -> Stmt:
+	
+	if match([TokenType.PRINT]):
+		return print_statement()
+	
+	return expression_statement()
+
+
+func print_statement():
+	var value = expression()
+	
+	if not consume(TokenType.SEMICOLON, "Expect ';' after value."):
+		return null
+	
+	return Print.new(value)
+
+
+func expression_statement():
+	var expr = expression()
+	
+	if not consume(TokenType.SEMICOLON, "Expect ';' after expression."):
+		return null
+	
+	return Expresion.new(expr)
 
 
 func equality():
