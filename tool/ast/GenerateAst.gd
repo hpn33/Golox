@@ -1,13 +1,7 @@
 extends Node
 
 
-#		[
-#			"Binary   : Expr left, Token operator, Expr right",
-#			"Grouping : Expr expression",                      
-#			"Literal  : Object value",                         
-#			"Unary    : Token operator, Expr right"            
-#		],
-var struc := {
+var expr_struc := {
 	'Binary': {
 		'left': 'Expr',
 		'operator': 'Token',
@@ -25,20 +19,32 @@ var struc := {
 	}
 }
 
+var stmt_struc := {
+	"Expresion": { 'expression': 'Expr' },
+	'Print' : { 'expression': 'Expr'}
+}
 
-var path = 'res://core/ast/'
+
+var root := 'res://core/'
+var expr_path := root + 'expr/'
+var stmt_path := root + 'stmt/'
+
+var path := ''
 
 func _ready():
 	
-	define_ast("Expr", struc)
+	path = expr_path
+	define_ast("Expr", expr_struc)
 	
+	path = stmt_path
+	define_ast("Stmt", stmt_struc)
+
 
 func define_ast(base_name: String, types: Dictionary):
 
 	var writer := TextWriter.new()
 	
-	writer.add('extends Object')\
-		.new_line('class_name ' + base_name)\
+	writer.add('class_name ' + base_name)\
 		.add_line()\
 		.done()
 	
@@ -82,12 +88,12 @@ func define_visitor(writer: TextWriter, base_name: String, types: Dictionary):
 	
 	for type_name in types.keys():
 		
-		writer.new_line('func visit_%s_%s(%s): pass' % [type_name.to_lower(), base_name.to_lower(), base_name.to_lower()])
+		writer.new_line('func visit_%s_%s(%s): pass' % [type_name.to_lower(), base_name.to_lower(), base_name.to_lower()]).done()
 	
 
 
 func define_type(writer: TextWriter, base_name: String, clas_name: String, field_list: Dictionary):
-	writer.add("extends Object")\
+	writer.add('extends ' + base_name)\
 		.new_line('class_name ' + clas_name)\
 		.add_line()\
 		.done()
