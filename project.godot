@@ -29,11 +29,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/stmt/Expresion.gd"
 }, {
-"base": "Stmt",
-"class": "Expression",
-"language": "GDScript",
-"path": "res://core/stmt/Expression.gd"
-}, {
 "base": "Reference",
 "class": "FileInfo",
 "language": "GDScript",
@@ -99,7 +94,6 @@ _global_script_class_icons={
 "Binary": "",
 "Expr": "",
 "Expresion": "",
-"Expression": "",
 "FileInfo": "",
 "Grouping": "",
 "IOUtil": "",
