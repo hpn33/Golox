@@ -1,3 +1,4 @@
+tool
 extends Node
 
 
@@ -7,21 +8,27 @@ var expr_struc := {
 		'operator': 'Token',
 		'right': 'Expr'
 	},
-	'Grouping': {
-		'expression': 'Expr'
-	},
-	'Literal': {
-		'value': 'Object'
-	},
+	'Grouping': { 'expression': 'Expr' },
+	'Literal': { 'value': '' },
 	'Unary': {
 		'operator': 'Token',
 		'right': 'Expr' 
-	}
+	},
+	'Variable': { 'name': 'Token' } 
 }
 
 var stmt_struc := {
-	"Expresion": { 'expression': 'Expr' },
-	'Print' : { 'expression': 'Expr'}
+	"Block": { "statements": 'Array' },
+	"Assign": { 
+		'name': 'Token',
+		'value': 'Expr'
+	},
+	"ExpressionL": { 'expression': 'Expr' },
+	'Print' : { 'expression': 'Expr'},
+	'Var': { 
+		'name': 'Token',
+		'initializer': 'Expr'
+	}
 }
 
 
@@ -31,7 +38,17 @@ var stmt_path := root + 'stmt/'
 
 var path := ''
 
+
 func _ready():
+	generate()
+
+
+#export(bool) var generate = false setget set_generate
+#
+#func set_generate(value):
+#	generate()
+
+func generate():
 	
 	path = expr_path
 	define_ast("Expr", expr_struc)
@@ -101,28 +118,28 @@ func define_type(writer: TextWriter, base_name: String, clas_name: String, field
 	
 	var vars := ''
 	# Fields.
+	for i in field_list.size():
+
+		var key = field_list.keys()[i]
+
+		var variable = key
+
+		var type = field_list[key]
+
+		if type != '':
+			variable += ': %s' % type
+
+
+		vars += variable + (', 'if i != field_list.size()-1 else '')
+
+		variable = 'var ' + variable
+		writer.new_line(variable).done()
+	
 #	for i in field_list.size():
-#
 #		var key = field_list.keys()[i]
 #
-#		var variable = key
-#
-#		var type = field_list[key]
-#
-#		if type != '':
-#			variable += ': %s' % type
-#
-#
-#		vars += variable + (', 'if i != field_list.size()-1 else '')
-#
-#		variable = 'var ' + variable
-#		writer.new_line(variable).done()
-	
-	for i in field_list.size():
-		var key = field_list.keys()[i]
-		
-		vars += key + (', 'if i != field_list.size()-1 else '')
-		writer.new_line('var ' + key).done()
+#		vars += key + (', 'if i != field_list.size()-1 else '')
+#		writer.new_line('var ' + key).done()
 	
 	writer.add_line().done()
 	

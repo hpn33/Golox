@@ -2,6 +2,8 @@ class_name Interpreter
 
 
 
+var environment = EnvironmentL.new()
+
 
 func interpret(statements):
 	
@@ -13,6 +15,24 @@ func interpret(statements):
 
 func execute(stmt: Stmt):
 	stmt.accept(self)
+
+
+func execute_block(statements: Array, _environment: EnvironmentL):
+	var previous = environment
+	
+	environment = _environment
+	
+	for statement in statements:
+		execute(statement)
+	
+	environment = previous
+
+
+func visit_block_stmt(stmt: Block):
+	execute_block(stmt.statements, EnvironmentL.new(environment))
+	
+	return null
+
 
 
 func stringify(object):
@@ -107,9 +127,13 @@ func visit_unary_expr(expr):
 		
 		
 	
-	# Unreachable.                              
+	# Unreachable.
 	return null
 
+
+
+func visit_variable_expr(expr: Variable):
+	return environment.Get(expr.name)
 
 
 
@@ -120,10 +144,10 @@ func evaluate(expr):
 	return expr.accept(self)
 
 
-func visit_expression_stmt(stmt: Expresion):
+func visit_expressionl_stmt(stmt: ExpressionL):
 	evaluate(stmt.expression)
 	
-	return null 
+	return null
 
 
 func visit_print_stmt(stmt: Print):
@@ -132,6 +156,22 @@ func visit_print_stmt(stmt: Print):
 	print(stringify(value))
 	
 	return null
+
+
+func visit_var_stmt(stmt: Var):
+	var value = null
+	if stmt.initializer:
+		value = evaluate(stmt.initializer)
+	
+	environment.define(stmt.name.lexeme, value)
+	return null
+
+
+func visit_assign_expr(expr: Assign):
+	var value = evaluate(expr.value)
+	
+	environment.assign(expr.name, value)
+	return value
 
 
 

@@ -1,9 +1,9 @@
 extends Stmt
 class_name Print
 
-var expression
+var expression: Expr
 
-func _init(expression):
+func _init(expression: Expr):
 	self.expression = expression
 
 func accept(visitor):

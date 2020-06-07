@@ -14,8 +14,9 @@ func do(_tokens):
 func parse() -> Array:
 	
 	var statements := []
+	
 	while not is_at_end():
-		statements.append(statement())
+		statements.append(declaration())
 	
 	return statements
 
@@ -63,13 +64,44 @@ func previous() -> Token:
 
 
 func expression():
-	return equality()
+	return assignment()
+
+
+func assignment():
+	var expr = equality()
+	
+	if match([TokenType.EQUAL]):
+		var equals = previous()
+		var value = assignment()
+	
+		if expr is Variable:
+			var name = (expr as Variable).name
+			
+			return Expr.new().Assign(name, value)
+		
+		return error(equals, "Invalid assignment target.")
+	
+	return expr
+
+
+func declaration():
+	
+	if match([TokenType.VAR]):
+		return var_declaration()
+	
+	return statement()
+	
+	synchronize()
+	return null
 
 
 func statement() -> Stmt:
 	
 	if match([TokenType.PRINT]):
 		return print_statement()
+	
+	if match([TokenType.LEFT_BRACE]):
+		return Block.new(block())
 	
 	return expression_statement()
 
@@ -83,13 +115,42 @@ func print_statement():
 	return Print.new(value)
 
 
+func block():
+	var statements = []
+	
+	while not check(TokenType.RIGHT_BRACE)\
+		and not is_at_end():
+		statements.append(declaration())
+	
+	if not consume(TokenType.RIGHT_BRACE, "Expect '}' after block."):
+		return null
+	
+	return statements
+
+
+func var_declaration():
+	var name = consume(TokenType.IDENTIFIER, "Expect variable name.")
+	
+	if not name: 
+		return null
+	
+	var initializer = null;                                     
+	if match([TokenType.EQUAL]):
+		initializer = expression()
+	
+	if not consume(TokenType.SEMICOLON, "Expect ';' after variable declaration."):
+		return null
+	
+	return Var.new(name, initializer)
+
+
 func expression_statement():
 	var expr = expression()
 	
 	if not consume(TokenType.SEMICOLON, "Expect ';' after expression."):
 		return null
 	
-	return Expresion.new(expr)
+	return ExpressionL.new(expr)
 
 
 func equality():
@@ -158,6 +219,9 @@ func primary():
 	
 	if match([TokenType.NUMBER, TokenType.STRING]):
 		return Literal.new(previous().literal)
+	
+	if match([TokenType.IDENTIFIER]):
+		return Variable.new(previous())
 	
 	if match([TokenType.LEFT_PAREN]):
 		var expr = expression()

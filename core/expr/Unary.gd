@@ -1,10 +1,10 @@
 extends Expr
 class_name Unary
 
-var operator
-var right
+var operator: Token
+var right: Expr
 
-func _init(operator, right):
+func _init(operator: Token, right: Expr):
 	self.operator = operator
 	self.right = right
 

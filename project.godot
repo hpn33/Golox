@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Stmt",
+"class": "Assign",
+"language": "GDScript",
+"path": "res://core/stmt/Assign.gd"
+}, {
 "base": "Expr",
 "class": "AstPrinter",
 "language": "GDScript",
@@ -19,15 +24,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/expr/Binary.gd"
 }, {
+"base": "Stmt",
+"class": "Block",
+"language": "GDScript",
+"path": "res://core/stmt/Block.gd"
+}, {
+"base": "Reference",
+"class": "EnvironmentL",
+"language": "GDScript",
+"path": "res://core/Environment.gd"
+}, {
 "base": "Reference",
 "class": "Expr",
 "language": "GDScript",
 "path": "res://core/expr/Expr.gd"
 }, {
 "base": "Stmt",
-"class": "Expresion",
+"class": "ExpressionL",
 "language": "GDScript",
-"path": "res://core/stmt/Expresion.gd"
+"path": "res://core/stmt/ExpressionL.gd"
 }, {
 "base": "Reference",
 "class": "FileInfo",
@@ -88,12 +103,25 @@ _global_script_classes=[ {
 "class": "Unary",
 "language": "GDScript",
 "path": "res://core/expr/Unary.gd"
+}, {
+"base": "Stmt",
+"class": "Var",
+"language": "GDScript",
+"path": "res://core/stmt/Var.gd"
+}, {
+"base": "Expr",
+"class": "Variable",
+"language": "GDScript",
+"path": "res://core/expr/Variable.gd"
 } ]
 _global_script_class_icons={
+"Assign": "",
 "AstPrinter": "",
 "Binary": "",
+"Block": "",
+"EnvironmentL": "",
 "Expr": "",
-"Expresion": "",
+"ExpressionL": "",
 "FileInfo": "",
 "Grouping": "",
 "IOUtil": "",
@@ -105,7 +133,9 @@ _global_script_class_icons={
 "Print": "",
 "Stmt": "",
 "Token": "",
-"Unary": ""
+"Unary": "",
+"Var": "",
+"Variable": ""
 }
 
 [application]

@@ -105,9 +105,15 @@ func _on_SimpleText_pressed() -> void:
 #	input.text = """1+(2 3)""" # with error
 #	input.text = """1+(2+'hello')""" # with error
 #	input.text = """2+2==-2+3""" 
-	input.text =\
-"""print 'one';
-print true;
-print 2 + 1;""" # with error
+#	input.text =\
+#"""print 'one';
+#print true;
+#print 2 + 1;""" # with error
+#	input.text =\
+#"""var a = 'before';
+#print a; // 'before'.
+#var a = 'after';
+#print a; // 'after'.
+#""" # variable
 	input.emit_signal("text_changed")
 
