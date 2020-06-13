@@ -1,14 +1,8 @@
-class_name Parser
+extends ParserBase
+class_name ParserLox
 
 
-var tokens := []
-var current := 0
 
-func do(_tokens):
-	
-	tokens = _tokens
-	
-	return parse()
 
 
 func parse() -> Array:
@@ -21,43 +15,6 @@ func parse() -> Array:
 	return statements
 
 
-
-func match(types: Array) -> bool:
-	
-	for type in types:
-		if check(type):
-			advance()
-			return true
-	
-	return false
-
-
-func check(type) -> bool:
-	
-	if is_at_end():
-		return false
-	
-	return peek().type == type
-
-
-func advance() -> Token:
-	
-	if not is_at_end():
-		current += 1
-	
-	return previous()
-
-
-func is_at_end() -> bool:
-	return peek().type == TokenType.EOF
-
-
-func peek() -> Token:
-	return tokens[current]
-
-
-func previous() -> Token:
-	return tokens[current - 1]
 
 
 

@@ -37,19 +37,20 @@ func _on_input_text_changed() -> void:
 
 
 
-
 func compile():
 	
 	ErrorHandler.clear()
 	error_panel.clean()
 	
 	
+	
 	### compiling
 	Tester.start('lexing')
-	var tokens = Lexer.new().do(input.text)
-#	var tokens = []
+	
+	var tokens = LexerLox.new().do(input.text)
+	
 	Tester.next('parser')
-	var statements = Parser.new().do(tokens)
+	var statements = ParserLox.new().do(tokens)
 	
 	Tester.stop()
 	### compiling

@@ -1,26 +1,7 @@
-class_name LexerAction
+extends LexerBase
+class_name LexerLox
 
-
-var lexer
-
-func _init(_lexer):
-	lexer = _lexer
-
-
-
-func handle(letter) -> bool:
-	
-	for action in actions:
-		if action.check(letter):
-			action.lex(lexer, letter)
-			return false
-	
-	return true
-
-
-
-
-var actions := [
+var _actions := [
 	NumberAction.new(),
 	IdentifierAction.new(),
 	
@@ -33,6 +14,8 @@ var actions := [
 	
 	StringAction.new(),
 ]
+func get_actions() -> Array:
+	return _actions
 
 
 
@@ -163,7 +146,7 @@ class IdentifierAction:
 		var text = lexer.selected_text()
 		var type = TokenType.get_keywords(text)
 		
-#		Reader.add_token_type(type);
-		lexer.add_token_literal(type, text);
+#		lexer.add_token_type(type)
+		lexer.add_token_literal(type, text)
 
 

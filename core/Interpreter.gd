@@ -2,7 +2,7 @@ class_name Interpreter
 
 
 
-var environment = EnvironmentL.new()
+var environment = EnvironmentLox.new()
 
 
 func interpret(statements):
@@ -17,7 +17,7 @@ func execute(stmt: Stmt):
 	stmt.accept(self)
 
 
-func execute_block(statements: Array, _environment: EnvironmentL):
+func execute_block(statements: Array, _environment: EnvironmentLox):
 	var previous = environment
 	
 	environment = _environment
@@ -29,7 +29,7 @@ func execute_block(statements: Array, _environment: EnvironmentL):
 
 
 func visit_block_stmt(stmt: Block):
-	execute_block(stmt.statements, EnvironmentL.new(environment))
+	execute_block(stmt.statements, EnvironmentLox.new(environment))
 	
 	return null
 

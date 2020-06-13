@@ -1,4 +1,4 @@
-class_name Lexer
+class_name LexerBase
 
 
 
@@ -23,13 +23,10 @@ func do(_source):
 
 func scan_tokens():
 	
-	var lexer_actions = LexerAction.new(self)
-	
-	
 	while not is_at_end():
 		
 		fresh()
-		scan_token(lexer_actions)
+		scan_token()
 	
 	
 	add_token(Token.new(TokenType.EOF, "", null, line))
@@ -38,18 +35,27 @@ func scan_tokens():
 
 
 
-func scan_token(lexer_action):
+func scan_token():
 	
 	var c = advance()
 	
-	if lexer_action.handle(c):
+	if handle(c):
 		ErrorHandler.error(line, "[%s]: Unexpected character." % c)
 
 
 
 
+func get_actions() -> Array:
+	return []
 
-
+func handle(letter) -> bool:
+	
+	for action in get_actions():
+		if action.check(letter):
+			action.lex(self, letter)
+			return false
+	
+	return true
 
 
 

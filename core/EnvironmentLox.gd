@@ -1,11 +1,11 @@
-class_name EnvironmentL
+class_name EnvironmentLox
 
 
 var values := {}
 
 var enclosing
 
-func _init(_enclosing: EnvironmentL = null):
+func _init(_enclosing: EnvironmentLox = null):
 	enclosing = _enclosing
 
 
