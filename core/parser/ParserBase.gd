@@ -20,7 +20,10 @@ func parse() -> Array:
 
 
 func is_at_end() -> bool:
-	return peek().type == TokenType.EOF
+	if typeof(peek().type) == typeof(TokenType.EOF):
+		return peek().type == TokenType.EOF
+	
+	return false
 
 
 func peek() -> Token:

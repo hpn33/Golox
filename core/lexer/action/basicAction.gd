@@ -1,21 +1,47 @@
-extends LexerBase
-class_name LexerLox
+extends Node
+class_name LexerAction
 
-var _actions := [
-	NumberAction.new(),
-	IdentifierAction.new(),
+
+
+class WhiteSpaceAction:
 	
-	SingleLetterAction.new(),
-	OperatorsAction.new(),
+	func check(c):
+		return c in [' ', '\r', '\t']
 	
-	CommentOrSlashAction.new(),
-	WhiteSpaceAction.new(),
-	NextLineAction.new(),
+	func lex(lexer, letter):
+		pass
+		
+
+
+class NextLineAction:
 	
-	StringAction.new(),
-]
-func get_actions() -> Array:
-	return _actions
+	func check(c):
+		return c == '\n'
+	
+	func lex(lexer, letter):
+		lexer.next_line()
+		
+
+
+
+class NumberAction:
+	
+	func check(c):
+		return '0' <= c && c <= '9'
+	
+	func lex(lexer, letter):
+		while lexer.is_digit(lexer.peek()):
+			lexer.advance();
+		
+		# Look for a fractional part.
+		if lexer.peek() == '.' && lexer.is_digit(lexer.peek_next()):
+			# Consume the "."
+			lexer.advance();                                              
+		
+			while lexer.is_digit(lexer.peek()): 
+				lexer.advance()
+		
+		lexer.add_token_literal(TokenType.NUMBER, float(lexer.selected_text()))
 
 
 
@@ -44,6 +70,9 @@ class StringAction:
 		# Trim the surrounding quotes
 		lexer.add_token_literal(TokenType.STRING, lexer.selected_string())
 		
+
+
+
 
 
 class SingleLetterAction:
@@ -91,44 +120,10 @@ class CommentOrSlashAction:
 			lexer.add_token_literal(TokenType.SLASH, letter)
 		
 
-class WhiteSpaceAction:
-	extends LexerAction.WhiteSpaceAction
-#	func check(c):
-#		return c in [' ', '\r', '\t']
-#
-#	func lex(lexer, letter):
-#		pass
-#
 
 
 
-class NextLineAction:
-	
-	func check(c):
-		return c == '\n'
-	
-	func lex(lexer, letter):
-		lexer.next_line()
-		
 
-class NumberAction:
-	
-	func check(c):
-		return '0' <= c && c <= '9'
-	
-	func lex(lexer, letter):
-		while lexer.is_digit(lexer.peek()):
-			lexer.advance();
-		
-		# Look for a fractional part.
-		if lexer.peek() == '.' && lexer.is_digit(lexer.peek_next()):
-			# Consume the "."
-			lexer.advance();                                              
-		
-			while lexer.is_digit(lexer.peek()): 
-				lexer.advance()
-		
-		lexer.add_token_literal(TokenType.NUMBER, float(lexer.selected_text()))
 
 
 class IdentifierAction:
@@ -150,5 +145,6 @@ class IdentifierAction:
 		
 #		lexer.add_token_type(type)
 		lexer.add_token_literal(type, text)
+
 
 

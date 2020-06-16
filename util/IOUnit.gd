@@ -183,7 +183,7 @@ func make_file(_file_name):
 	return result == OK
 
 
-func open_file(file_name):
+func open_file(file_name) -> File:
 	file.open('%s/%s' % [path, file_name], File.WRITE)
 	return file
 
