@@ -13,7 +13,7 @@ func open_file():
 	
 	var file := File.new()
 	
-	file.open("res://grammerMake/lox.gd", File.READ)
+	file.open("res://tool/grammerMake/lox.gd", File.READ)
 	
 	var text = file.get_as_text()
 	

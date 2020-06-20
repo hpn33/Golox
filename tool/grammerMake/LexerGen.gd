@@ -18,7 +18,6 @@ var _actions := [
 	
 	LexerAction.SingleLetterAction.new(),
 	LexerAction.OperatorsAction.new(),
-#	UndefineAction.new()
 	
 ]
 

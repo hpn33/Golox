@@ -6,7 +6,12 @@ class_name ParserGen
 
 func parse() -> Array:
 	
-	print(declaration())
+#	print(tokens)
+	
+	while not is_at_end():
+		print(declaration())
+	
+	
 	
 	
 	return []
@@ -25,7 +30,12 @@ func declaration():
 	return Content.new(id, content)
 
 func expression():
-	return peek()
+	var c := []
+	
+	while not match([TokenType.SEMICOLON]):
+		c.append(peek())
+	
+	return c
 
 class Content:
 	var id 

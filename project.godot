@@ -77,7 +77,7 @@ _global_script_classes=[ {
 "base": "LexerBase",
 "class": "LexerGen",
 "language": "GDScript",
-"path": "res://grammerMake/LexerGen.gd"
+"path": "res://tool/grammerMake/LexerGen.gd"
 }, {
 "base": "LexerBase",
 "class": "LexerLox",
@@ -97,7 +97,7 @@ _global_script_classes=[ {
 "base": "ParserBase",
 "class": "ParserGen",
 "language": "GDScript",
-"path": "res://grammerMake/ParserGen.gd"
+"path": "res://tool/grammerMake/ParserGen.gd"
 }, {
 "base": "ParserBase",
 "class": "ParserLox",
