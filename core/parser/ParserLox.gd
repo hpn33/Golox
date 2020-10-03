@@ -24,8 +24,8 @@ func expression():
 	return assignment()
 
 
-func assignment():
-	var expr = equality()
+func assignment() -> Expr:
+	var expr = orF()
 	
 	if match([TokenType.EQUAL]):
 		var equals = previous()
@@ -37,6 +37,28 @@ func assignment():
 			return Expr.new().Assign(name, value)
 		
 		return error(equals, "Invalid assignment target.")
+	
+	return expr
+
+func orF() -> Expr:
+	var expr = andF()
+	
+	while match([TokenType.OR]):
+	  var operator = previous()
+	  var right = andF()
+	  expr = Logical.new(expr, operator, right)
+	
+	return expr
+
+
+func andF() -> Expr:
+	var expr = equality()
+	
+	while match([TokenType.AND]):
+	  var operator = previous()
+	  var right = equality()
+	  expr = Logical.new(expr, operator, right)
+	
 	
 	return expr
 

@@ -57,6 +57,17 @@ func visit_literal_expr(expr):
 	return expr.value
 
 
+func visit_logical_expr(expr: Logical):
+	var left = evaluate(expr.left)
+	
+	if (expr.operator.type == TokenType.OR):
+		if is_truthy(left): return left
+	else:
+		if !is_truthy(left): return left
+	
+	return evaluate(expr.right)
+
+
 func visit_binary_expr(expr):
 	var left = evaluate(expr.left)
 	var right = evaluate(expr.right)
@@ -149,7 +160,7 @@ func visit_expressionl_stmt(stmt: ExpressionL):
 	
 	return null
 
-func visitIfStmt(stmt: If):
+func visit_if_stmt(stmt: If):
 	if (is_truthy(evaluate(stmt.condition))):
 		execute(stmt.thenBranch)
 	elif (stmt.elseBranch != null):

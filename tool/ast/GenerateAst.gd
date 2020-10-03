@@ -10,6 +10,7 @@ var expr_struc := {
 	},
 	'Grouping': { 'expression': 'Expr' },
 	'Literal': { 'value': '' },
+	"Logical"  : { 'left': 'Expr', 'operator': 'Token', 'right': 'Expr'},
 	'Unary': {
 		'operator': 'Token',
 		'right': 'Expr' 
