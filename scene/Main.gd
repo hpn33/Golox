@@ -116,5 +116,14 @@ func _on_SimpleText_pressed() -> void:
 #var a = 'after';
 #print a; // 'after'.
 #""" # variable
+	
+#	input.text = """if (true) if (true) print('true'); else print('false');"""
+	
+#	input.text =\
+#	"""
+#	print \"hi\" or 2; // \"hi\".
+#	print nil or \"yes\"; // \"yes\".
+#	"""
+	
 	input.emit_signal("text_changed")
 

@@ -30,7 +30,8 @@ var stmt_struc := {
 	'Var': { 
 		'name': 'Token',
 		'initializer': 'Expr'
-	}
+	},
+	"While" : { 'condition': 'Expr', 'body': 'Stmt'}
 }
 
 

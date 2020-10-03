@@ -82,6 +82,10 @@ func statement() -> Stmt:
 	if match([TokenType.PRINT]):
 		return print_statement()
 	
+	if match([TokenType.WHILE]):
+		return while_statement()
+	
+	
 	if match([TokenType.LEFT_BRACE]):
 		return Block.new(block())
 	
@@ -101,7 +105,7 @@ func if_statement() -> Stmt:
 	if match([TokenType.ELSE]):
 		elseBranch = statement();
 	
-	return Stmt.If(condition, thenBranch, elseBranch)
+	return If.new(condition, thenBranch, elseBranch)
 
 
 func print_statement():
@@ -140,6 +144,18 @@ func var_declaration():
 		return null
 	
 	return Var.new(name, initializer)
+
+
+func while_statement():
+	if not consume(TokenType.LEFT_PAREN, "Expect '(' after 'while'."):
+		return null
+	
+	var condition = expression()
+	if not consume(TokenType.RIGHT_PAREN, "Expect ')' after condition."):
+		return null
+	
+	var body = statement()
+	return While.new(condition, body)
 
 
 func expression_statement():

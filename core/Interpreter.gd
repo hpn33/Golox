@@ -186,6 +186,13 @@ func visit_var_stmt(stmt: Var):
 	return null
 
 
+func visit_while_stmt(stmt: While):
+	while is_truthy(evaluate(stmt.condition)):
+		execute(stmt.body)
+	
+	return null
+
+
 func visit_assign_expr(expr: Assign):
 	var value = evaluate(expr.value)
 	
