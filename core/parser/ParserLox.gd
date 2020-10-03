@@ -34,7 +34,8 @@ func assignment() -> Expr:
 		if expr is Variable:
 			var name = (expr as Variable).name
 			
-			return Expr.new().Assign(name, value)
+			return Assign.new(name, value)
+#			return Assign.new(name, value)
 		
 		return error(equals, "Invalid assignment target.")
 	
@@ -76,6 +77,9 @@ func declaration():
 
 func statement() -> Stmt:
 	
+	if match([TokenType.FOR]):
+		return for_statement()
+	
 	if match([TokenType.IF]):
 		return if_statement()
 	
@@ -85,17 +89,57 @@ func statement() -> Stmt:
 	if match([TokenType.WHILE]):
 		return while_statement()
 	
-	
 	if match([TokenType.LEFT_BRACE]):
 		return Block.new(block())
 	
 	return expression_statement()
 
 
+func for_statement() -> Stmt:
+	if not consume(TokenType.LEFT_PAREN, "Expect '(' after 'for'."):
+		return null
+	
+	var initializer
+	if match([TokenType.SEMICOLON]):
+		initializer = null
+	elif match([TokenType.VAR]):
+		initializer = var_declaration()
+	else:
+		initializer = expression_statement()
+	
+	var condition = null
+	if not check(TokenType.SEMICOLON):
+		condition = expression()
+	
+	if not consume(TokenType.SEMICOLON, "Expect ';' after loop condition."):
+		return null
+	
+	var increment = null
+	if not check(TokenType.RIGHT_PAREN):
+		increment = expression()
+	
+	if not consume(TokenType.RIGHT_PAREN, "Expect ')' after for clauses."):
+		return null
+	
+	var body = statement()
+	
+	if increment:
+		body = Block.new([body, ExpressionL.new(increment)])
+	
+	if not condition:
+		condition = Literal.new(true)
+	body = While.new(condition, body)
+	
+	if initializer:
+		body = Block.new([initializer, body])
+	
+	return body
+
+
 func if_statement() -> Stmt:
 	if not consume(TokenType.LEFT_PAREN, "Expect '(' after 'if'."):
 		return null
-		
+	
 	var condition = expression();
 	if not consume(TokenType.RIGHT_PAREN, "Expect ')' after if condition."):
 		return null

@@ -3,6 +3,7 @@ extends Node
 
 
 var expr_struc := {
+	"Assign": { 'name': 'Token', 'value': 'Expr' },
 	'Binary': {
 		'left': 'Expr',
 		'operator': 'Token',
@@ -20,10 +21,6 @@ var expr_struc := {
 
 var stmt_struc := {
 	"Block": { "statements": 'Array' },
-	"Assign": { 
-		'name': 'Token',
-		'value': 'Expr'
-	},
 	"ExpressionL": { 'expression': 'Expr' },
 	'If': {'condition': 'Expr', 'thenBranch': 'Stmt', 'elseBranch': 'Stmt' },
 	'Print' : { 'expression': 'Expr'},

@@ -9,10 +9,10 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Stmt",
+"base": "Expr",
 "class": "Assign",
 "language": "GDScript",
-"path": "res://core/stmt/Assign.gd"
+"path": "res://core/expr/Assign.gd"
 }, {
 "base": "Expr",
 "class": "AstPrinter",

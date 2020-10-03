@@ -1,5 +1,6 @@
 class_name Expr
 
+func visit_assign_expr(expr): pass
 func visit_binary_expr(expr): pass
 func visit_grouping_expr(expr): pass
 func visit_literal_expr(expr): pass
