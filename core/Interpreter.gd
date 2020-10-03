@@ -149,6 +149,14 @@ func visit_expressionl_stmt(stmt: ExpressionL):
 	
 	return null
 
+func visitIfStmt(stmt: If):
+	if (is_truthy(evaluate(stmt.condition))):
+		execute(stmt.thenBranch)
+	elif (stmt.elseBranch != null):
+		execute(stmt.elseBranch)
+	
+	return null
+
 
 func visit_print_stmt(stmt: Print):
 	var value = evaluate(stmt.expression)

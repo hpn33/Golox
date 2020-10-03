@@ -24,6 +24,7 @@ var stmt_struc := {
 		'value': 'Expr'
 	},
 	"ExpressionL": { 'expression': 'Expr' },
+	'If': {'condition': 'Expr', 'thenBranch': 'Stmt', 'elseBranch': 'Stmt' },
 	'Print' : { 'expression': 'Expr'},
 	'Var': { 
 		'name': 'Token',

@@ -54,6 +54,9 @@ func declaration():
 
 func statement() -> Stmt:
 	
+	if match([TokenType.IF]):
+		return if_statement()
+	
 	if match([TokenType.PRINT]):
 		return print_statement()
 	
@@ -61,6 +64,22 @@ func statement() -> Stmt:
 		return Block.new(block())
 	
 	return expression_statement()
+
+
+func if_statement() -> Stmt:
+	if not consume(TokenType.LEFT_PAREN, "Expect '(' after 'if'."):
+		return null
+		
+	var condition = expression();
+	if not consume(TokenType.RIGHT_PAREN, "Expect ')' after if condition."):
+		return null
+	
+	var thenBranch = statement();
+	var elseBranch = null;
+	if match([TokenType.ELSE]):
+		elseBranch = statement();
+	
+	return Stmt.If(condition, thenBranch, elseBranch)
 
 
 func print_statement():

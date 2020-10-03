@@ -59,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://util/IOUnit.gd"
 }, {
+"base": "Stmt",
+"class": "If",
+"language": "GDScript",
+"path": "res://core/stmt/If.gd"
+}, {
 "base": "Reference",
 "class": "Interpreter",
 "language": "GDScript",
@@ -155,6 +160,7 @@ _global_script_class_icons={
 "FileInfo": "",
 "Grouping": "",
 "IOUtil": "",
+"If": "",
 "Interpreter": "",
 "LexerAction": "",
 "LexerBase": "",
