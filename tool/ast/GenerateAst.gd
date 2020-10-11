@@ -58,32 +58,36 @@ func generate():
 
 
 func define_ast(base_name: String, types: Dictionary):
-
-	var writer := TextWriter.new()
 	
-	writer.add('class_name ' + base_name)\
-		.add_line()\
-		.done()
+	var file = FileBuilder.new()
 	
-	define_visitor(writer, base_name, types)
+	file.setClassName(base_name).done()
+	
+	define_visitor(file, base_name, types)
+	
 	
 	
 	# The base accept() method.
-	writer.add_line()\
-		.new_line("func accept(visitor): pass")\
-		.add_line(2)\
+	var fun = FuncBuilder.new()
+	fun.setName('accept')\
+		.setArg('visitor')\
+		.setPass()\
+		.spaceTop()\
+		.spaceBottom()\
 		.done()
 	
-	create_file(base_name + '.gd' , writer)
+	file.addFunc(fun).done()
+	
+	create_file(base_name + '.gd' , file)
 	
 	# The AST classes.
 	for clas_name in types.keys():
 		
-		define_type(writer, base_name, clas_name, types[clas_name])
-	
+		define_type(base_name, clas_name, types[clas_name])
 	
 
-func create_file(_file_name, writer):
+
+func create_file(_file_name, fileBuilder: FileBuilder):
 	
 	var iou := IOUtil.new()
 	
@@ -94,144 +98,90 @@ func create_file(_file_name, writer):
 	
 	var file = iou.open_file(_file_name)
 	
-	file.store_string(writer.text)
+	file.store_string(fileBuilder.build())
 	file = ''
 	iou.close_file()
 	
-	writer.clear()
+	fileBuilder.clear()
 
 
-func define_visitor(writer: TextWriter, base_name: String, types: Dictionary):
+func define_visitor(fileBuilder: FileBuilder, base_name: String, types: Dictionary):
 	
 	for type_name in types.keys():
+		var fun = FuncBuilder.new()
 		
-		writer.new_line('func visit_%s_%s(%s): pass' % [type_name.to_lower(), base_name.to_lower(), base_name.to_lower()]).done()
+		
+		fun.setName('visit_%s_%s' % [type_name.to_lower(), base_name.to_lower()])\
+			.setArg(base_name.to_lower())\
+			.done()
+		
+		
+		fileBuilder.addFunc(fun).done()
+		
 	
 
 
-func define_type(writer: TextWriter, base_name: String, clas_name: String, field_list: Dictionary):
-	writer.add('extends ' + base_name)\
-		.new_line('class_name ' + clas_name)\
-		.add_line()\
+func define_type(base_name: String, clas_name: String, field_list: Dictionary):
+	
+	var file = FileBuilder.new()
+	
+	file.setExtends(base_name)\
+		.setClassName(clas_name)\
 		.done()
 	
 	
-	var vars := ''
+	var vars := []
 	# Fields.
 	for i in field_list.size():
-
+		
 		var key = field_list.keys()[i]
-
-		var variable = key
-
 		var type = field_list[key]
-
+		
+		
+		var varing = VarBuilder.new()
+		varing.setName(key).done()
+		if type != '':
+			varing.setType(type).done()
+		
+		
+		file.addVar(varing).done()
+		
+		
+		var variable = key
 		if type != '':
 			variable += ': %s' % type
-
-
-		vars += variable + (', 'if i != field_list.size()-1 else '')
-
-		variable = 'var ' + variable
-		writer.new_line(variable).done()
+		
+		vars.append(variable + (', 'if i != field_list.size()-1 else ''))
 	
-#	for i in field_list.size():
-#		var key = field_list.keys()[i]
-#
-#		vars += key + (', 'if i != field_list.size()-1 else '')
-#		writer.new_line('var ' + key).done()
-	
-	writer.add_line().done()
 	
 	# Constructor.
-	writer.new_line("func _init(%s):" % str(vars))\
-		.add_level()\
+	var construcFunc = FuncBuilder.new()
+	construcFunc.setName('_init')\
+		.setArgs(vars)\
 		.done()
-	
-	
 	
 	# Store parameters in fields.
 	for key in field_list.keys():
 		
-		writer.new_line("self.%s = %s" % [key, key]).done()
+		var setVar = SetVarBuilder.new()
+		setVar.setRightLeft("self.%s" % [key], key).done()
+		
+		construcFunc.addToBody(setVar).done()
 	
-	writer.sub_level().add_line().done()
+	file.setConstructor(construcFunc).done()
+	
 	
 	# Visitor pattern.
-	writer.new_line("func accept(visitor):")\
-		.add_level()\
-		.new_line("return visitor.visit_%s_%s(self)" % [clas_name.to_lower(), base_name.to_lower()])\
+	var acceptFunc = FuncBuilder.new()
+	acceptFunc.setName('accept')\
+		.setArg('visitor')\
+		.addToBody("return visitor.visit_%s_%s(self)" % [clas_name.to_lower(), base_name.to_lower()])\
 		.done()
 	
-	create_file(clas_name + '.gd', writer)
-	
-
-
-
-class TextWriter:
-	
-	var text := ''
-	var level := 0
-	
-	func add(_text = '') -> TextWriter:
-		
-		text += _text
-		
-		return self
+	file.addFunc(acceptFunc).done()
 	
 	
-	func new_line(_text = '') -> TextWriter:
-		
-		return add('\n' + tabs() + _text)
+	create_file(clas_name + '.gd', file)
 	
-	
-	func add_line(num: int = 1) -> TextWriter:
-		
-		var line = ''
-		
-		for i in num:
-			line += '\n' + tabs()
-		
-		return add(line)
-	
-	
-	func add_level(num: int = 1) -> TextWriter:
-		
-		level += num
-		
-		return self
-	
-	
-	func sub_level(num: int = 1) -> TextWriter:
-		
-		level -= num
-		
-		return self
-	
-	
-	func tabs() -> String:
-		var tabs := ''
-		
-		for i in level:
-			tabs += '\t'
-		
-		return tabs
-	
-	
-	func done():
-		pass
-	
-	
-	func clear():
-		text = ''
-		level = 0
-	
-	
-	
-
-
-
-
-
 
 
