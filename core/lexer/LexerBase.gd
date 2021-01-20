@@ -54,6 +54,10 @@ func handle(letter) -> bool:
 		if action.check(letter):
 			action.lex(self, letter)
 			return false
+		
+	
+	add_token_literal(TokenType.STRING, selected_text())
+	return false
 	
 	return true
 
