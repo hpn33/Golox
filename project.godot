@@ -184,16 +184,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://core/expr/Variable.gd"
 }, {
-"base": "Reference",
-"class": "WAT",
-"language": "GDScript",
-"path": "res://addons/WAT/namespace.gd"
-}, {
-"base": "",
-"class": "WATTest",
-"language": "GDScript",
-"path": "res://addons/WAT/core/test/test.gd"
-}, {
 "base": "Stmt",
 "class": "While",
 "language": "GDScript",
@@ -235,8 +225,6 @@ _global_script_class_icons={
 "Var": "",
 "VarBuilder": "",
 "Variable": "",
-"WAT": "",
-"WATTest": "",
 "While": ""
 }
 
