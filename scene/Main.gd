@@ -125,20 +125,20 @@ func _on_SimpleText_pressed() -> void:
 #	print nil or \"yes\"; // \"yes\".
 #	"""
 	
-#	input.text = "for (var i = 0; i < 10; i = i + 1) print i;"
+	input.text = "for (var i = 0; i < 10; i = i + 1) print i;"
 	
-	input.text =\
-	"""
-	var a = 0;
-var b = 1;
-
-while (a < 10000) {
-  print a;
-  var temp = a;
-  a = b;
-  b = temp + b;
-}
-	"""
+#	input.text =\
+#	"""
+#var a = 0;
+#var b = 1;
+#
+#while (a < 10000) {
+#  print a;
+#  var temp = a;
+#  a = b;
+#  b = temp + b;
+#}
+#	"""
 	
 	input.emit_signal("text_changed")
 
