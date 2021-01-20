@@ -107,6 +107,11 @@ _global_script_classes=[ {
 "base": "LexerBase",
 "class": "LexerLox",
 "language": "GDScript",
+"path": "res://core/lexer/LexerShop.gd"
+}, {
+"base": "LexerBase",
+"class": "LexerShop",
+"language": "GDScript",
 "path": "res://core/lexer/LexerLox.gd"
 }, {
 "base": "GDBuilder",
@@ -210,6 +215,7 @@ _global_script_class_icons={
 "LexerBase": "",
 "LexerGen": "",
 "LexerLox": "",
+"LexerShop": "",
 "LineBuilder": "",
 "Literal": "",
 "Logical": "",
@@ -255,7 +261,7 @@ Tester="*res://autoload/Tester.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "WAT" )
+enabled=PoolStringArray(  )
 
 [rendering]
 

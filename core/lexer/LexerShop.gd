@@ -1,23 +1,48 @@
 extends LexerBase
-class_name LexerShop
+class_name LexerLox
 
 var _actions := [
-	CharAction.new(),
+	NumberAction.new(),
+	IdentifierAction.new(),
+	
+	SingleLetterAction.new(),
+	OperatorsAction.new(),
+	
+	CommentOrSlashAction.new(),
+	WhiteSpaceAction.new(),
+	NextLineAction.new(),
+	
+	StringAction.new(),
 ]
 func get_actions() -> Array:
 	return _actions
 
 
 
-class CharAction:
+class StringAction:
 	
 	func check(c):
-		return true
+		return c in ["'", "\""]
 	
 	func lex(lexer, symbol):
 		
+		while not lexer.is_at_end() and lexer.peek() != symbol:
+			
+			if lexer.peek() == '\n':
+				lexer.next_line()
+			
+			lexer.advance()
+		
+		# Unterminated string.
+		if lexer.is_at_end():
+			ErrorHandler.error(lexer.line, 'Unterminated string.')
+			return
+		
+		# The closing ".
+		lexer.advance()
+		
 		# Trim the surrounding quotes
-		lexer.add_token_literal(TokenType.CHAR, lexer.selected_text())
+		lexer.add_token_literal(TokenType.STRING, lexer.selected_string())
 		
 
 

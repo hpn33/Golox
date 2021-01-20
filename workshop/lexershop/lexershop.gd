@@ -34,7 +34,7 @@ func _ready() -> void:
 	input.text = sample
 	
 	
-	var lexList = LexerBase.new().do(sample)
+	var lexList = LexerShop.new().do(sample)
 	
 	for i in lexList:
 		var label = Label.new()
