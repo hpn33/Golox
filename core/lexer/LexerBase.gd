@@ -5,8 +5,8 @@ class_name LexerBase
 var source := ''
 var tokens := []
 
-var start := 0
-var current := 0
+var start_position := 0
+var current_position := 0
 var line := 1
 
 
@@ -25,22 +25,24 @@ func scan_tokens():
 	
 	while not is_at_end():
 		
-		fresh()
+		fresh_start_position()
 		scan_token()
 	
 	
+	# end token
 	add_token(Token.new(TokenType.EOF, "", null, line))
 
 
 
 
 
-func scan_token():
+func scan_token() -> void:
 	
 	var c = advance()
 	
-	if handle(c):
-		ErrorHandler.error(line, "[%s]: Unexpected character." % c)
+	if find_lex(c): return
+	
+	ErrorHandler.error(line, "[%s]: Unexpected character." % c)
 
 
 
@@ -48,15 +50,17 @@ func scan_token():
 func get_actions() -> Array:
 	return []
 
-func handle(letter) -> bool:
+func find_lex(letter) -> bool:
 	
 	for action in get_actions():
+		#var action : LexerActionBase = a as LexerActionBase
+		
 		if action.check(letter):
 			action.lex(self, letter)
-			return false
+			return true
 		
 	
-	return true
+	return false
 
 
 
@@ -68,17 +72,18 @@ func handle(letter) -> bool:
 
 
 
-
-func advance():
-	current += 1
+# move forward
+# get char
+func advance() -> String :
+	current_position += 1
 	
-	return source[current - 1]
+	return source[current_position - 1]
 
-func is_at_end():
-	return current >= len(source)
+func is_at_end() -> bool:
+	return current_position >= len(source)
 
 
-func is_digit(letter):
+func is_digit(letter) -> bool:
 	return '0' <= letter && letter <= '9'
 
 
@@ -95,40 +100,40 @@ func peek():
 	if is_at_end():
 		return '\\0'
 	
-	return source[current]
+	return source[current_position]
 
 func peek_next():
-	if current + 1 >= len(source):
+	if current_position + 1 >= len(source):
 		return '\\0'
 	
-	return source[current + 1]
+	return source[current_position + 1]
 
 
 func match(expected) -> bool:
 	if is_at_end():
 		 return false
 	
-	if source[current] != expected:
+	if source[current_position] != expected:
 		return false
 	
-	current += 1
+	current_position += 1
 	return true   
 
 
 
 
 
-func fresh():
-	start = current
+func fresh_start_position():
+	start_position = current_position
 
-func substr(from = start, to = current):
+func substr(from = start_position, to = current_position):
 	return source.substr(from, to - from)
 
 func selected_text():
 	return substr()
 
 func selected_string():
-	return substr(start+1, current - 1)
+	return substr(start_position + 1, current_position - 1)
 
 
 func next_line():

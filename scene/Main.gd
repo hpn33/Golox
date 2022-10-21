@@ -43,10 +43,10 @@ func compile():
 	error_panel.clean()
 	
 	
+	Tester.start('-------')
 	
 	### compiling
-	Tester.start('lexing')
-	
+	Tester.next('lexing')
 	var tokens = LexerLox.new().do(input.text)
 	
 	Tester.next('parser')

@@ -4,6 +4,7 @@ class_name LexerAction
 
 
 class WhiteSpaceAction:
+	extends LexerActionBase
 	
 	func check(c):
 		return c in [' ', '\r', '\t']
@@ -14,6 +15,7 @@ class WhiteSpaceAction:
 
 
 class NextLineAction:
+	extends LexerActionBase
 	
 	func check(c):
 		return c == '\n'
@@ -25,6 +27,7 @@ class NextLineAction:
 
 
 class NumberAction:
+	extends LexerActionBase
 	
 	func check(c):
 		return '0' <= c && c <= '9'
@@ -46,6 +49,7 @@ class NumberAction:
 
 
 class StringAction:
+	extends LexerActionBase
 	
 	func check(c):
 		return c in ["'", "\""]
@@ -76,6 +80,7 @@ class StringAction:
 
 
 class SingleLetterAction:
+	extends LexerActionBase
 	
 	func check(c):
 		return c in TokenType.single_chars.keys()
@@ -86,6 +91,7 @@ class SingleLetterAction:
 
 
 class OperatorsAction:
+	extends LexerActionBase
 	
 	func check(c):
 		return c in TokenType.operators
@@ -96,6 +102,7 @@ class OperatorsAction:
 
 
 class CommentOrSlashAction:
+	extends LexerActionBase
 	
 	func check(c):
 		return c == '/'
@@ -127,6 +134,7 @@ class CommentOrSlashAction:
 
 
 class IdentifierAction:
+	extends LexerActionBase
 	
 	func check(c):
 		return ('a' <= c and c <= 'z')\

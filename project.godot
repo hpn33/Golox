@@ -92,7 +92,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "LexerAction",
 "language": "GDScript",
-"path": "res://core/lexer/action/basicAction.gd"
+"path": "res://core/lexer/action/BasicLexerActions.gd"
+}, {
+"base": "Node",
+"class": "LexerActionBase",
+"language": "GDScript",
+"path": "res://core/lexer/LexerActoinBase.gd"
 }, {
 "base": "Reference",
 "class": "LexerBase",
@@ -107,12 +112,12 @@ _global_script_classes=[ {
 "base": "LexerBase",
 "class": "LexerLox",
 "language": "GDScript",
-"path": "res://core/lexer/LexerShop.gd"
+"path": "res://language/shop/lexer/LexerShop.gd"
 }, {
 "base": "LexerBase",
 "class": "LexerShop",
 "language": "GDScript",
-"path": "res://core/lexer/LexerLox.gd"
+"path": "res://language/lox/lexer/LexerLox.gd"
 }, {
 "base": "GDBuilder",
 "class": "LineBuilder",
@@ -212,6 +217,7 @@ _global_script_class_icons={
 "If": "",
 "Interpreter": "",
 "LexerAction": "",
+"LexerActionBase": "",
 "LexerBase": "",
 "LexerGen": "",
 "LexerLox": "",
